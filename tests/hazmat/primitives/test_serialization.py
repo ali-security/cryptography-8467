@@ -1276,6 +1276,31 @@ class TestECDSASSHSerialization(object):
             load_ssh_public_key(ssh_key, backend)
 
 
+class TestSSHCertificate:
+    @pytest.mark.supported(
+        only_if=lambda backend: backend.ed25519_supported(),
+        skip_message="Requires OpenSSL with Ed25519 support",
+    )
+    def test_loads_ssh_cert(self, backend):
+        ssh_key = b"ecdsa-sha2-nistp256-cert-v01@openssh.com AAAAKGVjZHNhLXNoYTItbm" \
+            b"lzdHAyNTYtY2VydC12MDFAb3BlbnNzaC5jb20AAAAgLfsFv9Gbc6LZSiJFWdYQl" \
+            b"IMNI50GExXW0fBpgGVf+Y4AAAAIbmlzdHAyNTYAAABBBIzVyRgVLR4F38bIOLBN" \
+            b"8CNm8Nf+eBHCVkKDKb9WDyLLD61CEmzjK/ORwFuSE4N60eIGbFidBf0D0xh7G6o" \
+            b"TNxsAAAAAAAAAAAAAAAEAAAAUdGVzdEBjcnlwdG9ncmFwaHkuaW8AAAAaAAAACm" \
+            b"NyeXB0b3VzZXIAAAAIdGVzdHVzZXIAAAAAY7KyZAAAAAB2frXAAAAAWAAAAA1mb" \
+            b"3JjZS1jb21tYW5kAAAALAAAAChlY2hvIGFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh" \
+            b"YWFhYWFhYWFhYWFhAAAAD3ZlcmlmeS1yZXF1aXJlZAAAAAAAAACCAAAAFXBlcm1" \
+            b"pdC1YMTEtZm9yd2FyZGluZwAAAAAAAAAXcGVybWl0LWFnZW50LWZvcndhcmRpbm" \
+            b"cAAAAAAAAAFnBlcm1pdC1wb3J0LWZvcndhcmRpbmcAAAAAAAAACnBlcm1pdC1wd" \
+            b"HkAAAAAAAAADnBlcm1pdC11c2VyLXJjAAAAAAAAAAAAAAAzAAAAC3NzaC1lZDI1" \
+            b"NTE5AAAAICH6csEOmGbOfT2B/S/FJg3uyPsaPSZUZk2SVYlfs0KLAAAAUwAAAAt" \
+            b"zc2gtZWQyNTUxOQAAAEDz2u7X5/TFbN7Ms7DP4yArhz1oWWYKkdAk7FGFkHfjtY" \
+            b"/YfNQ8Oky3dCZRi7PnSzScEEjos7723dhF8/y99WwH reaperhulk@despoina." \
+            b"local"
+
+        key = load_ssh_public_key(ssh_key, backend)
+
+
 @pytest.mark.supported(
     only_if=lambda backend: backend.ed25519_supported(),
     skip_message="Requires OpenSSL with Ed25519 support"
